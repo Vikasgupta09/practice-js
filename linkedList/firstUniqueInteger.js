@@ -59,7 +59,7 @@ class Stream {
             this.uniqueMap.set(number, node);
         }
     }
-    // Time Complexity - O(n)
+    // Time Complexity - O(1)
     getFirstUnique() {
         if(this.stream.isEmpty()) {
             return null;
