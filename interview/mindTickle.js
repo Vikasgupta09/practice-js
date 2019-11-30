@@ -9,10 +9,9 @@ let debounce = (fn, delay) => {
   return function() {
     const args = arguments;
     clearTimeout(prevDebounce);
-    prevDebounce = setTimeout(() => fn.apply(this,args),delay);
-  }
-}
-
+    prevDebounce = setTimeout(() => fn.apply(this, args), delay);
+  };
+};
 
 // function log(...args) {
 //   console.log(...args)
@@ -28,14 +27,14 @@ let debounce = (fn, delay) => {
 //   debouncedLog(4)
 // }, 1)
 
-// 
+//
 
 // [...obj];
 
 // let a = {
 //   b: {
 //     c: function abc() {
-      
+
 //     },
 //     d: 1
 //   }
@@ -47,11 +46,12 @@ let debounce = (fn, delay) => {
 
 function deepClone(input) {
   let result;
-  result = Array.isArray(input) ? []: {};
-  
+  result = Array.isArray(input) ? [] : {};
+
   // loop over the elements recursively and map it to the result
-  for(let key in input) {
-    result[key] = typeof input[key] === "object" ? deepClone(input[key]): input[key];
+  for (let key in input) {
+    result[key] =
+      typeof input[key] === "object" ? deepClone(input[key]) : input[key];
   }
   return result;
 }
@@ -59,7 +59,6 @@ function deepClone(input) {
 // console.log(deepClone(a));
 
 // input fn
-
 
 /**
  * PubSub
@@ -69,7 +68,7 @@ function deepClone(input) {
  * channel.publish("some-event", data)
  * channel.subscribe("some-event3", cb)
  * channel.publish("some-event3", data)
- * 
+ *
  */
 
 class PubSub {
@@ -78,29 +77,28 @@ class PubSub {
   }
   subscribe(event, callback) {
     if (this.map[event]) {
-      this.map[event].push(callback);      
+      this.map[event].push(callback);
     } else {
       this.map[event] = [callback];
     }
-
   }
   unsubscribe(event, callback) {
-    if(this.map[event]) {
+    if (this.map[event]) {
       let callbackArray = this.map[event];
       //whether callback exist or not ?
-      if(callbackArray.indexOf(callback) > -1) {
+      if (callbackArray.indexOf(callback) > -1) {
         // naive approach
         let idx = callbackArray.indexOf(callback);
         // swap with last value
-        callbackArray[idx] = callbackArray[callbackArray.length-1];
+        callbackArray[idx] = callbackArray[callbackArray.length - 1];
         // remove that last value
         callbackArray.pop();
       }
     }
   }
   publish(event, data) {
-    if(Object(this.map).hasOwnProperty(event)) {
-      this.map[event].forEach((fnn) => {
+    if (Object(this.map).hasOwnProperty(event)) {
+      this.map[event].forEach(fnn => {
         fnn(data);
       });
     }
