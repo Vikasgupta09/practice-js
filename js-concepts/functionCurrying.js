@@ -32,3 +32,25 @@ divideByTwo(4);
 
 let divideByThree = divide.bind(null, 3);
 divideByThree(9);
+
+/**
+ * Implement a generic curry function
+ * that converts a given function with n arguments
+ */
+
+var curry = function(fn, ...args) {
+  if (fn.length <= args.length) {
+    return fn(...args);
+  } else {
+    return function(...more) {
+      return curry(fn, ...args, ...more);
+    };
+  }
+};
+
+let volume = function(l, w, h) {
+  console.log(l * w * h);
+};
+
+let curried = curry(volume);
+curried(1)(2)(3);

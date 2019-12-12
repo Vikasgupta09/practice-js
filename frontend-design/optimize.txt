@@ -1,0 +1,98 @@
+Performance Related (speed)
+-------------------
+
+- Add profiler to app, run and check which areas are behaving badly
+- components might be getting rerendered which might not be reqd
+  - so we can stop rerendeing those components by using
+    - react memo
+    - react pure component
+    - shouldComponentUpdate method
+- If packet size is huge, then we can use lazy loading (React.lazy) on certain routes
+- If APIs are slow, then some improvements can be done on the server side
+- May be we are using wrong method to update state, code optimization
+- May be assets are loading slowly - we should check for CDN and use smaller images
+- We can use some external packages available as well 
+
+Cardinal rule of web Performance
+--------------------------------
+MEASURE FIRST THEN OPTIMIZE
+
+CRP - Critical Rendering Path
+-----------------------------
+Sequence of steps a browser goes through to render a web page.
+
+1. Grab the HTML and build DocumentOM.
+2. Fetch the CSS and build CSSOM.
+- JS residing parallely to HTML , CSS having capability to update both DOM and CSSOM.
+3. Combine the output of #1 and #2 to build a render tree.
+4. Then figure out where everything goes on the page. (Layout)
+5. And then finally paint the pixels on the actual screen.
+
+HTML to DocumentOM
+------------------
+Characters -> Tokens -> Node -> DocumentOM
+
+HTML -> StartTag:HTML -> HTML node -> DOM
+
+DOM is simply a tree structure representation of content that are created from nodes after traversing through all tokens.
+DOM in other words is a full parts presentation of the HTML markup.
+
+BROWSERS CONSTRUCT THE DOM INCREMENTALLY. So we must take advantage of this.
+Increment HTML delivery - Returning partial HTML is a really nice Performance optimization.
+
+CSS to CSSOM
+------------
+Characters -> Tokens -> Node -> CSSOM
+
+CSS object model starts from body as root node and adds other elements as part of body because all visible contents are part of body.
+So the tree cascades down and therefore it is named as cascading stylesheets. Properties of parents are cascade down to childrens.
+
+We can't use a partial CSS tree like because it can lead us to use the wrong styles when we render the page.
+
+BROWSERS BLOCKS PAGE RENDERING UNTIL IT RECEIVES AND PROCESSES ALL OF THE CSS.
+CSS IS RENDER BLOCKING. It also blocks parsing JS.
+
+JS
+--
+Parser blocking. It blocks DOM construction , executes and then resumes DOM construction.
+
+
+Render tree
+-----------
+
+Combining the DOM and CSSOM tree. Render tree only captures visible content. 
+So it picks node from DOM , checks correspond CSSOM to get style. If style is hidden or not visible, then skip that node and continue traversing other nodes from DOM.
+
+Layout
+------
+
+NOTE:
+Default viewport width is 980 px. So we should always update the viewport width to adjust with device width which can be done by using the following meta tag in head
+<meta name="viewport" content="width=device-width">
+
+Everytime we rotate the phone or resize the page, Layout stage is done again.
+
+OPTIMIZING HTML-DOM Step
+------------------------
+We put a lot of comments that are helpful for developers to understand but constructing a DOM tree from HTML needs to ignore those comments which is a task. So as optimization we should:
+
+- Minify
+- Compress
+- Cache
+ 
+OPTIMIZING CSS-CSSOM
+--------------------
+As this is block rendering, we should look out for those styles that should not be a part of block rendering style. E.g. 
+- media query styles that are to be carried out by on specific media request should be placed in separate style sheet and that style sheet should be used with an attributed media so that it doesn't become block rendering style sheet.
+- inline css
+
+
+OPTIMIZING JS
+-------------
+- Adding "async" with script tag, it tells browser not to block DOM construction and it doesn't get blocked by CSSOM. So basically async doesn't block the critical rendering path.
+- Defer JS execution
+
+Overall in CRP
+- Reduce no. of critical resources
+- reduce total critial bytes
+- reduce critical path points

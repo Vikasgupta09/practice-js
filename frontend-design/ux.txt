@@ -1,0 +1,10 @@
+UX - User Xperience
+
+5 Planes (Jesse james garette)
+--------
+User needs -> Strategy      | Abstract
+Requirements -> Scope       |    |
+Architecture -> Stucture    |    |
+Layout -> Skeleton          |    |
+UI Design -> Surface        | Concrete
+

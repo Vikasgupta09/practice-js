@@ -1,0 +1,72 @@
+I am Vikas Gupta. I am from Delhi, India. I completed my master of engg  in 2014 and got hired by Caastle(formerly Gwynniebee) through the campus placement. 
+In last one and half yr I am working with Caastle as principal software engineer primarily responsible for design and development of web and mobile applications which mostly involves laying down the infrastructure code or doing some POCs to see if any particular library or frameworks can be used. And, speaking in terms of tech stack, I am working here as a full stack developer, I started working here initially as a frontend developer for the first 2 years then I worked over implementing Node and Java based REST APIs and in last one and half yr I have worked in iOS development team. Currently I am analysing the improvements that can be done on node js like upgrading the node js version in all boxes, building process monitoring tools.
+
+I am now looking for opportunities and am open towards looking all frontend/ back end / full stack profiles.
+I am very positive and self motivated person. Besides coding, I love to read self development books.
+
+
+Node.JS
+-------
+- is a JS runtime built on chrome's V8 JS engine.
+- uses event driven, non blocking I/O operation that makes it light weight and efficient
+- server side platform for developing client-server apps.
+Why Node.js ?
+------------
+- uses asynchronous programming
+- eliminates the waiting and continues the next request
+- single threaded 
+
+aysnc and event driven - all apis of node.js lib are asynchronous i.e. non blocking. So a node.js based server never waits for an API to return data. The server moves to next API req
+
+it's highly scalable coz event mechanism helps the server to respond in a non blocking way
+
+no buffering - node.js cuts down the overall processing time while uploading audio and video files. nodejs app never buffers any data, it simply outputs the data in chunk
+
+extremely fast - it uses chrome's v8 engine so its lib is very fast in execution
+
+open source 
+
+Event loop
+----------
+is a component which checks event queue on periodic basis and pushed the result in execution stack if the stack is empty.
+
+
+How to Scale node application ?
+------------------------------
+Cloning using cluster module
+micro services
+
+Event driven programming
+------------------------
+progg paradigm in which the flow of program is determined by events likes messages from other programs.
+
+Streams
+-------
+Readable : used for reading large chunk of data
+Writable : used for writing data
+Transform : used for modifying data
+Duplex : are both readable and writable (socket)
+
+libuv
+-----
+multi platform support library that focus on asynchronous I/O
+
+package.josn
+contains the metadata information about the app. this file should be present in the root dir of nodejs package.
+
+REPL - Read, Evaluate, Print , loop 
+
+process out of memory
+--------------------
+this err comes when memory allocated for the execution app is less than the reqd memory when application runs. By default , mem limit is 512 MB
+max-old-space-size 
+
+Child thread
+-------------
+Node.js, is a single thread process. It does not expose child threads and thread management methods to the developer. Technically, Node.js does spawn child threads for certain tasks such as asynchronous I/O, but these run behind the scenes and do not execute any application JavaScript code, nor block the main event loop.
+
+Worker
+------
+Since Node.js is by default a single thread application, it will run on a single processor core and will not take full advantage of multiple core resources. However, Node.js provides support for deployment on multiple-core systems, to take greater advantage of the hardware. 
+
+The Cluster module is one of the core Node.js modules and it allows running multiple Node.js worker processes that will share the same port.
