@@ -1,0 +1,48 @@
+Load Balancing
+refers to efficiently distributing network traffic across a group of backend servers
+
+A load balancer basically distributes client requests or network load efficiently across multiple servers and ensures that no one server is overworked, which could degrade performance. 
+So if a server goes down, the load balancer redirects traffic to the remaining online servers.
+When a new server is added to the server group, the load balancer automatically starts to send requests to it.
+
+
+Load balancing algo
+--------------------
+Round Robin – Requests are distributed across the group of servers sequentially.
+
+Least Connections – A new request is sent to the server with the fewest current connections to clients. The relative computing capacity of each server is factored into determining which one has the least connections.
+
+IP Hash – The IP address of the client is used to determine which server receives the request.
+
+Optimistic locking - concurrency
+----------------------
+In an optimistic locking scheme, update request will be successful only if the resource is not modified since the client last checked. basically HTTP provides some built-in mechanisms for implementing an optimistic locking strategy using the If-Match conditional header and ETags
+
+An ETag is an identifier for the version of the underlying resource.
+--------
+the client application first retrieves the resource that it wishes to update and stores the ETag that the server returns with the response body. The client application then performs any relevant updates and POSTs the resource back with the If-Match condition header and the ETag that it retrieved previously. If the ETag matches the resource’s current ETag, the server performs that update and responds with success. Otherwise, the server rejects the update with a 412 Precondition Failed response.
+
+Rate Limiting algo - to prevent excessive use
+------------------
+why ? - a RESTful API might apply rate limiting to protect an underlying database; without rate limiting, a scalable API service could make large numbers of calls to the database concurrently, and the database might not be able to send clear rate-limiting signals.
+
+Token bucket
+------------
+A token bucket adds tokens at some rate. When a service request is made, the service attempts to withdraw a token (decrementing the token count) to fulfill the request. If there are no tokens in the bucket, the service has reached its limit and responds with backpressure.
+
+Leaky bucket
+------------
+similar to token bucket, it uses a queue which you can think of as a bucket holding the requests.
+When a request is received, it is appended to the end of the queue. At a regular interval, the first item on the queue is processed. If the queue is full, then additional requests are discarded (or leaked).
+
+The advantage of this algorithm is that it smooths out bursts of requests and processes them at an approximately average rate. It’s also easy to implement on a single server or load balancer, and is memory efficient for each user given the limited queue size.
+
+Fixed Window
+-------------
+In a fixed window algorithm, a window size of n seconds (typically using human-friendly values, such as 60 or 3600 seconds) is used to track the rate. Each incoming request increments the counter for the window. If the counter exceeds a threshold, the request is discarded.
+The advantage of this algorithm is that it ensures more recent requests gets processed without being starved by old requests.
+Disadvantage - they are subject to spikes at the edges of the window, as available quota resets.
+
+Sliding window 
+---------------
+Sliding windows have the benefits of a fixed window, but the rolling window of time smooths out bursts. Systems such as Redis facilitate this technique with expiring keys.

@@ -100,46 +100,58 @@ class BST {
     }
   }
   zigZagTraversal(root) {
-    let q = [root];
-    let s = [];
+    let s1 = [root];
+    let s2 = [];
     let left2right = true;
-    while (q.length > 0) {
-      let currentNode = q.shift();
-      this.zigZag.push(currentNode.val);
-      if (left2right) {
-        console.log('left');
-        if (currentNode.left !== null) {
-          q.push(currentNode.left);
-        }
-        if (currentNode.right != null) {
-          q.push(currentNode.right);
-        }
-      } else {
-        console.log('right');
-        if (currentNode.right != null) {
-          q.push(currentNode.right);
-        }
-        if (currentNode.left !== null) {
-          q.push(currentNode.left);
+    while (s1.length > 0) {
+      let currentNode = s1.pop();
+      if (currentNode) {
+        this.zigZag.push(currentNode.val);
+        if (left2right) {
+          if (currentNode.left !== null) {
+            s2.push(currentNode.left);
+          }
+          if (currentNode.right != null) {
+            s2.push(currentNode.right);
+          }
+        } else {
+          if (currentNode.right != null) {
+            s2.push(currentNode.right);
+          }
+          if (currentNode.left !== null) {
+            s2.push(currentNode.left);
+          }
         }
       }
-      left2right = !left2right;
+      if (s1.length === 0) {
+        left2right = !left2right;
+        s1 = s2;
+        s2 = [];
+      }
     }
   }
 }
 
 function treeTraversal() {
   // create arr of tree nodes
-  let node1 = new TreeNode(10);
-  let node2 = new TreeNode(5);
-  let node3 = new TreeNode(15);
-  let node4 = new TreeNode(6);
-  let node5 = new TreeNode(20);
+  let node1 = new TreeNode(1);
+  let node2 = new TreeNode(2);
+  let node3 = new TreeNode(3);
+  let node4 = new TreeNode(4);
+  let node5 = new TreeNode(5);
+  let node6 = new TreeNode(6);
+  let node7 = new TreeNode(7);
+  let node8 = new TreeNode(8);
+  let node9 = new TreeNode(9);
 
   node1.left = node2;
   node1.right = node3;
   node3.left = node4;
   node3.right = node5;
+  node5.left = node6;
+  node5.right = node7;
+  node2.left = node8;
+  node2.right = node9;
 
   let arr = [node1, node2, node3, null, null, node4, node5];
   // iterative approach

@@ -3,12 +3,12 @@
  */
 
 const employee = {
-  name: "vikas gupta",
+  name: 'vikas gupta',
   id: 64
 };
 
 let employeeDetails = function(count) {
-  console.log(this.id + " : " + this.name + " - " + count);
+  console.log(this.id + ' : ' + this.name + ' - ' + count);
 };
 
 // employeeDetails function is trying to access id and name from this object
@@ -46,3 +46,5 @@ Function.prototype.customApply = function(context, args) {
 };
 
 employeeDetails.customApply(employee, [3]);
+
+// Object.create(context, { fn : {value: this }})
